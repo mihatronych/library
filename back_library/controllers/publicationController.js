@@ -19,21 +19,17 @@ class PublicationController{
         }
     }
     async getAll(req, res){
-        let {authorId, regionId, publicatorId, typeId, dialectId, themeId, limit, page} = req.body
+        let {authorId, regionId, publicatorId, typeId, dialectId, themeId} = req.body
         const props = Object.getOwnPropertyNames(req.body);
         const array = [];
         props.forEach((propName) => {
-            if (propName !== 'limit' && propName !== 'page') {
                 let obj = {};
                 obj[propName.toString()] = req.body[propName];
                 array.push(obj);
-            }
         });
-        page = page || 1
-        limit = limit || 9
-        let offset = page * limit - limit
+
         let publications;
-        publications = await Publication.findAndCountAll({where:{[Op.and]: array}, limit, offset})
+        publications = await Publication.findAll({where:{[Op.and]: array}})
         return res.json(publications)
     }
     async getOne(req, res){

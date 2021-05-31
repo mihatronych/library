@@ -3,8 +3,6 @@ import {makeAutoObservable} from "mobx";
 export default class PublicationStore {
     constructor() {
         this._types = [
-            {id: 1, name: "Статья"},
-            {id: 2, name: "Роман"},
         ]
         this._themes = [
             {id:1, name: "Компьютерные науки"},
@@ -25,28 +23,14 @@ export default class PublicationStore {
             {id:4, name: "Чешский", languageId:"2"}
         ]
         this._authors = [
-            {id: 1, name: "user", email: "user@mail.ru", password: "$2b$05$sl56GEDxtZcyU3F.JOCWi.SLo7CCvg0z0EpGaDVhAQzOvgDRlccLa"},
-            {id: 2, name: "user2", email: "user2@mail.ru", password: "$2b$05$sl56GEDxtZcyU3F.JOCWi.SLo7CCvg0z0EpGaDVhAQzOvgDRlccLa"},
         ]
         this._publications = [
-            {id: 1, title: "Different1", short_review: "Different1 content1", pages: 10,
-                date_publ: "2019-12-31T19:00:00.000Z", date_create: "2019-12-31T19:00:00.000Z", authorId: 1, regionId: 1,
-                publicatorId: 1, typeId: 1, dialectId: 2, themeId: 2, file: "b532aede-4679-4d11-9fbc-5dc0d9394415.txt",},
-            {id: 2, title: "Different2", short_review: "Different2 content2", pages: 20,
-                date_publ: "2019-12-31T19:00:00.000Z", date_create: "2019-12-31T19:00:00.000Z", authorId: 1, regionId: 1,
-                publicatorId: 2, typeId: 2, dialectId: 3, themeId: 2, file: "b532aede-4679-4d11-9fbc-5dc0d9394415.txt",},
-            {id: 3, title: "Different3", short_review: "Different3 content3", pages: 30,
-                date_publ: "2019-12-31T19:00:00.000Z", date_create: "2019-12-31T19:00:00.000Z", authorId: 2, regionId: 2,
-                publicatorId: 1, typeId: 1, dialectId: 4, themeId: 1, file: "b532aede-4679-4d11-9fbc-5dc0d9394415.txt",},
-            {id: 4, title: "Different4", short_review: "Different4 content4", pages: 40,
-                date_publ: "2019-12-31T19:00:00.000Z", date_create: "2019-12-31T19:00:00.000Z", authorId: 2, regionId: 2,
-                publicatorId: 2, typeId: 2, dialectId: 2, themeId: 2, file: "b532aede-4679-4d11-9fbc-5dc0d9394415.txt",},
         ]
         makeAutoObservable(this)
     }
 
     setTypes(types){
-        this._isAuth = types
+        this._types = types
     }
     setThemes(themes){
         this._themes = themes

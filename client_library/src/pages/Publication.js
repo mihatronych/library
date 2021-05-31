@@ -11,7 +11,7 @@ const Publication = () => {
             style={{height:window.innerHeight - 54, zIndex:"-1"}}
         >
             <Card style={{width: window.innerWidth - 100, backgroundColor:'#C06C84', color:'white'}} className="p-5">
-                <h2 className="align-self-center"> Публикация (Здесь должен быть номер)</h2>
+                <h2 className="align-self-center"> Публикация 1</h2>
                 <div className="d-flex justify-content-between container">
 
                 </div>

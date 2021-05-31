@@ -5,6 +5,7 @@ import UserStore from "./store/UserStore";
 import PublicationStore from "./store/PublicationStore";
 import LanguageStore from "./store/LanguageStore";
 import ThemeStore from "./store/ThemeStore";
+import MarkStore from "./store/MarkStore";
 
 export const Context = createContext(null)
 
@@ -13,7 +14,8 @@ ReactDOM.render(
         user: new UserStore(),
         publication: new PublicationStore(),
         language: new LanguageStore(),
-        theme: new ThemeStore()
+        theme: new ThemeStore(),
+        mark: new MarkStore()
     }}>
         <App />,
     </Context.Provider>,

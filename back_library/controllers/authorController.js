@@ -46,12 +46,8 @@ class AuthorController{
         return res.json({token})
     }
     async getAll(req, res){
-        let {limit, page} = req.body
-        page = page || 1
-        limit = limit || 9
-        let offset = page * limit - limit
         let authors;
-        authors = await Author.findAndCountAll({limit, offset})
+        authors = await Author.findAll()
         return res.json(authors)
     }
     async getOne(req, res){
