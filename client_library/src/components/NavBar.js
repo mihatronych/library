@@ -8,6 +8,7 @@ import {observer} from "mobx-react-lite";
 import ArchiveMenu from "./ArchiveMenu";
 import LanguageMenu from "./LanguageMenu";
 import AdditionalMenu from "./AdditionalMenu";
+import "../styles.css"
 
 const phantom = {
     display: 'block',
@@ -30,6 +31,7 @@ const NavBar = observer(() => {
         <div>
         <Navbar variant="dark" className="mb-3" style={{backgroundColor:'#C06C84', position:'fixed', zIndex:'3', height: "60px", width: "100%",}}>
             <Container>
+                <div className="ico"/>
             <NavLink style={{color:'white'}} to={MAIN_ROUTE}>Главная</NavLink>
                 <ArchiveMenu />
                 <LanguageMenu/>

@@ -1,10 +1,13 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Card, Col, Container, Row} from "react-bootstrap";
 import {Context} from "../index";
 import {Link} from "react-router-dom";
 import {fetchAuthor, fetchPublication, fetchType} from "../http/library_api";
 import {observer} from "mobx-react-lite";
 import {fetchMark} from "../http/mark_api";
+import ReactPaginate from "react-paginate";
+import '../styles.css';
+
 
 const Main = observer(() => {
     const {publication, mark} = useContext(Context)
@@ -13,6 +16,7 @@ const Main = observer(() => {
         fetchAuthor().then(data => publication.setAuthors(data)).then(data => mark.setAuthors(data))
         fetchPublication().then(data => publication.setPublications(data)).then(data => mark.setPublications(data))
         fetchMark().then(data => mark.setMarks(data))
+        fetchType().then(data => publication.setTypes(data))
     }, [publication, mark])
 
     const meanMark = (publicationId) =>{
@@ -31,6 +35,50 @@ const Main = observer(() => {
         return <div>рейтинг: {sum/(count * 10)}</div>
     }
 
+    const [pageNumber, setPageNumber] = useState(0)
+
+    const publicationsPerPage = 2
+    const pagesVisited = pageNumber * publicationsPerPage
+    const sortedPublictions = publication.publications.slice()
+        .sort((a, b) => Date.parse(a.date_publ) - Date.parse(b.date_publ)).reverse()
+    const displayPublications = sortedPublictions
+        .slice(pagesVisited, pagesVisited + publicationsPerPage)
+        .map(publicat =>
+             <Link to={"/publication/:"+publicat.id} style={{ textDecoration: 'none' }}>
+                <div className="d-flex justify-content-between container mt-3" style={
+                    { backgroundColor:'#3366CC', color:"white"}
+                }>
+                    <Row>
+                        <Col>
+                        {publication.types.map(items => {
+                            if (items.id === parseInt(publicat.typeId))
+                                return <p className="m-auto ml-1">{items.name} </p>
+                        })
+                        }
+                        <Col className="m-auto"> <b> {publicat.title}</b>
+                            {publication.authors.map(items => {
+                                if (items.id === parseInt(publicat.authorId))
+                                    return <i className="m-auto"> - {items.name}</i>
+                            })}
+                        </Col>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="m-auto">Дата издания: {new Date(publicat.date_publ.toString()).toLocaleDateString()} </Col>
+                        <Col className="m-auto" >{publicat.pages} стр.</Col>
+                        <Col className="m-auto">{meanMark(publicat.id)}</Col>
+                    </Row>
+                </div>
+            </Link>
+        )
+
+
+    const pageCount = Math.ceil( publication.publications.length / publicationsPerPage);
+
+    const changePage = ({ selected }) => {
+        setPageNumber(selected);
+    };
+
     return (
         <Container
             className="d-flex justify-content-center align-items-center"
@@ -39,33 +87,18 @@ const Main = observer(() => {
             <Card style={{width: window.innerWidth - 100, backgroundColor:'#C06C84', color:'white'}} className="p-5">
                 <h2 className="align-self-center"> Новейшие публикации</h2>
                 <div >
-                {publication.publications.map(publicat =>
-                    <Link to={"/publication/:"+publicat.id} style={{ textDecoration: 'none' }}>
-                        <div className="d-flex justify-content-between container mt-3" style={
-                            { backgroundColor:'#3366CC', color:"white"}
-                        }>
-                            <Row>
-                                {publication.types.map(items => {
-                                if (items.id === parseInt(publicat.typeId))
-                                    return <p className="m-auto ml-1">{items.name} </p>
-                            })
-                            }
-                                <Col className="m-auto"> <b> {publicat.title}</b>
-                                {publication.authors.map(items => {
-                                    if (items.id === parseInt(publicat.authorId))
-                                        return <i className="m-auto"> - {items.name}</i>
-                                })
-                                }
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col className="m-auto">Дата издания: {publicat.date_publ.slice(0, 10)} </Col>
-                                <Col className="m-auto" >{publicat.pages} стр.</Col>
-                                <Col className="m-auto">{meanMark(publicat.id)}</Col>
-                            </Row>
-                        </div>
-                    </Link>
-                    )}
+                    {displayPublications}
+                    <ReactPaginate
+                        previousLabel={"<"}
+                        nextLabel={">"}
+                        pageCount={pageCount}
+                        onPageChange={changePage}
+                        containerClassName={"paginationBttns"}
+                        previousLinkClassName={"previousBttn"}
+                        nextLinkClassName={"nextBttn"}
+                        disabledClassName={"paginationDisabled"}
+                        activeClassName={"paginationActive"}
+                    />
                 </div>
             </Card>
         </Container>

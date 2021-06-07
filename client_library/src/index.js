@@ -6,6 +6,7 @@ import PublicationStore from "./store/PublicationStore";
 import LanguageStore from "./store/LanguageStore";
 import ThemeStore from "./store/ThemeStore";
 import MarkStore from "./store/MarkStore";
+import SuperFilterStore from "./store/SuperFilterStore";
 
 export const Context = createContext(null)
 
@@ -15,7 +16,8 @@ ReactDOM.render(
         publication: new PublicationStore(),
         language: new LanguageStore(),
         theme: new ThemeStore(),
-        mark: new MarkStore()
+        mark: new MarkStore(),
+        superFilter: new SuperFilterStore()
     }}>
         <App />,
     </Context.Provider>,
