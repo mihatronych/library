@@ -36,7 +36,7 @@ class AuthorController{
         }
         let comparePassword = bcrypt.compareSync(password, author.password)
         if(!comparePassword){
-            return next(ApiError.internal('Пользователь не найден'))
+            return next(ApiError.internal('Пароль некорректен'))
         }
         const token = generateJwt(author.id, author.name, author.email)
         return res.json({token})

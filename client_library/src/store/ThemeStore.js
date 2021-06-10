@@ -3,9 +3,10 @@ import {makeAutoObservable} from "mobx";
 export default class UserStore {
     constructor() {
         this._themes = [
-            {id:1, name: "Компьютерные науки"},
-            {id:2, name: "Экзорцизм"}
         ]
+        this._topics = [
+        ]
+        this._publications = []
         makeAutoObservable(this)
     }
 
@@ -13,7 +14,21 @@ export default class UserStore {
         this._themes = themes
     }
 
+    setTopics(topics){
+        this._topics = topics
+    }
+    setPublications(publications){
+        this._publications = publications
+    }
+
     get themes(){
         return this._themes
+    }
+
+    get topics(){
+        return this._topics
+    }
+    get publications(){
+        return this._publications
     }
 }

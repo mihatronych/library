@@ -6,10 +6,6 @@ export default class UserStore {
 
         ]
         this._dialects = [
-            {id:1, name: "Южнорусский", languageId:"1"},
-            {id:2, name: "Севернорусский", languageId:"1"},
-            {id:3, name: "Словацкий", languageId:"2"},
-            {id:4, name: "Чешский", languageId:"2"}
         ]
         makeAutoObservable(this)
     }
@@ -18,7 +14,15 @@ export default class UserStore {
         this._dialects = dialects
     }
 
+    setLanguages(languages){
+        this._languages = languages
+    }
+
     get dialects(){
         return this._dialects
+    }
+
+    get languages(){
+        return this._languages
     }
 }

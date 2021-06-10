@@ -1,12 +1,54 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../index";
 import {Button, Card, Container, Form} from "react-bootstrap";
 import Row from "react-bootstrap/Row";
+import {createPublication, fetchAuthor, fetchPublication, fetchRegion, fetchType} from "../http/library_api";
+import {fetchMark} from "../http/mark_api";
+import {fetchDialect} from "../http/lang_api";
+import {fetchTheme} from "../http/theme_topic_api";
+import {observer} from "mobx-react-lite";
+import {set} from "mobx";
+import {LOGIN_ROUTE} from "../utils/consts";
 
 
 
-const AddPublication = () => {
+const AddPublication = observer(() => {
     const {publication} = useContext(Context)
+
+    useEffect(() => {
+        fetchAuthor().then(data => publication.setAuthors(data))
+        fetchPublication().then(data => publication.setPublications(data))
+        fetchType().then(data => publication.setTypes(data))
+        fetchRegion().then(data => publication.setRegions(data))
+        fetchDialect().then(data => publication.setDialects(data))
+        fetchTheme().then(data => publication.setThemes(data))
+    }, [publication])
+
+    const [title, setTitle] = useState('')
+    const [short_review, setShort_review] = useState('')
+    const [pages, setPages] = useState('')
+    const [author_id, setAuthorId] = useState('') //Здесь название другое
+    const [themeId, setThemeId] = useState('')
+    const [dialectId, setDialectId] = useState('')
+    const [regionId, setRegionId] = useState('')
+    const [publicatorId, setPublicatorId] = useState('')
+    const [typeId, setTypeId] = useState('')
+    const [date_publ, setDate_publ] = useState(new Date().toLocaleDateString())
+    const [date_create, setDate_create] = useState(new Date().toLocaleDateString())
+    const [file, setFile] = useState('')
+
+    const Create = () => {
+        try {
+        createPublication({title: title, short_review: short_review, pages: pages,
+        authorId: author_id, themeId: themeId, typeId: typeId, regionId:regionId, date_publ: date_publ,
+            date_create:date_create, dialectId:dialectId, publicatorId: publicatorId, file: file
+        }).then()
+        alert("Данные добавлены");
+        } catch (e) {
+            return alert(e.response.data.message)
+        }
+    }
+
     return (
         <Container
             className="d-flex justify-content-center align-items-center mt-4"
@@ -18,11 +60,16 @@ const AddPublication = () => {
                     <Form.Control
                         className="mt-3"
                         placeholder="Введите название книги..."
+                        value={title}
+                        onChange={e => setTitle(e.target.value)}
                     />
                     <Row>
                     <Form.Group className="ml-3 mr-2">
                         <Form.Label>Выберите автора</Form.Label>
-                        <Form.Control as="select">
+                        <Form.Control as="select"
+                                      value={author_id}
+                                      onChange={e => setAuthorId(e.target.value)}
+                        >
                             {publication.authors.map(author =>
                                 <option value={author.id}>{author.name}</option>
                             )}
@@ -30,7 +77,9 @@ const AddPublication = () => {
                     </Form.Group>
                     <Form.Group className="ml-2 mr-2">
                         <Form.Label>Выберите тему</Form.Label>
-                        <Form.Control as="select">
+                        <Form.Control as="select"
+                                      value={themeId}
+                                      onChange={e => setThemeId(e.target.value)}>
                             {publication.themes.map(theme =>
                                 <option value={theme.id}>{theme.name}</option>
                             )}
@@ -38,7 +87,9 @@ const AddPublication = () => {
                     </Form.Group>
                     <Form.Group className="ml-2">
                         <Form.Label>Выберите тип</Form.Label>
-                        <Form.Control as="select">
+                        <Form.Control as="select"
+                                      value={typeId}
+                                      onChange={e => setTypeId(e.target.value)}>
                             {publication.types.map(type =>
                                 <option value={type.id}>{type.name}</option>
                             )}
@@ -47,17 +98,23 @@ const AddPublication = () => {
                     </Row>
                     <Form.Group>
                         <Form.Label>Введите краткое описание</Form.Label>
-                        <Form.Control as="textarea">
+                        <Form.Control as="textarea"
+                                      value={short_review}
+                                      onChange={e => setShort_review(e.target.value)}>
                         </Form.Control>
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Введите длину публикации</Form.Label>
-                        <input type="number" className="form-control" min='1'/>
+                        <input type="number" className="form-control" min='1'
+                               value={pages}
+                               onChange={e => setPages(e.target.value)}/>
                     </Form.Group>
                     <Row>
                     <Form.Group className="ml-3 mr-2">
                         <Form.Label>Выберите издательство</Form.Label>
-                        <Form.Control as="select">
+                        <Form.Control as="select"
+                                      value={publicatorId}
+                                      onChange={e => setPublicatorId(e.target.value)}>
                             {publication.publicators.map(publ =>
                                 <option value={publ.id}>{publ.name}</option>
                             )}
@@ -65,7 +122,9 @@ const AddPublication = () => {
                     </Form.Group>
                     <Form.Group className="ml-2 mr-2">
                         <Form.Label>Выберите язык</Form.Label>
-                        <Form.Control as="select">
+                        <Form.Control as="select"
+                                      value={dialectId}
+                                      onChange={e => setDialectId(e.target.value)}>
                             {publication.dialects.map(dialect =>
                                 <option value={dialect.id}>{dialect.name}</option>
                             )}
@@ -73,7 +132,9 @@ const AddPublication = () => {
                     </Form.Group>
                     <Form.Group className="ml-2">
                         <Form.Label>Выберите регион</Form.Label>
-                        <Form.Control as="select">
+                        <Form.Control as="select"
+                            value={regionId}
+                                      onChange={e => setRegionId(e.target.value)}>
                             {publication.regions.map(region =>
                                 <option value={region.id}>{region.name}</option>
                             )}
@@ -82,12 +143,15 @@ const AddPublication = () => {
                     </Row>
                     <Form.File
                         className="mt-3"
+                        value={file}
+                        onChange={e => setFile(e.target.value)}
                     />
                     
                     <Button
                         className="d-flex mt-3 justify-content-center"
                         variant={"dark"}
                         style={{backgroundColor:"#6C5B7B"}}
+                        onClick={Create}
                     >
                         Опубликовать
                     </Button>
@@ -95,6 +159,6 @@ const AddPublication = () => {
             </Card>
         </Container>
     );
-};
+});
 
 export default AddPublication;

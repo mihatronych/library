@@ -7,7 +7,9 @@ class PublicationController{
     async create(req, res, next){
         try{
             const {title, short_review, pages, date_publ, date_create, authorId, regionId, publicatorId, typeId, dialectId, themeId} = req.body
+            console.log(req.body)
             const {file} = req.files
+            console.log(file)
             let fileName = uuid.v4() + ".txt"
             file.mv(path.resolve(__dirname, '..', 'static', fileName))
 

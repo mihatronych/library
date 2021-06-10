@@ -15,7 +15,6 @@ const Authors = observer(() => {
     }, [])
 
     const countBooksOfAuthor = (authorId) => {
-
         return publication.publications.filter((data) => {if (data.authorId === parseInt(authorId)) return data}).length
     }
 

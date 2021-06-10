@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Card, Col, DropdownButton, Row, Button} from "react-bootstrap";
 
 import {Context} from "../index";
@@ -6,7 +6,6 @@ import DropdownItem from "react-bootstrap/DropdownItem";
 import ReactPaginate from 'react-paginate';
 
 const useSortableData = (items, sConfig, fConfig = null) => {
-
     const [sortConfig, setSortConfig] = React.useState(sConfig);
     const [filterConfig, setFilterConfig] = React.useState(fConfig);
     const {mark} = React.useContext(Context)
@@ -87,11 +86,8 @@ const useSortableData = (items, sConfig, fConfig = null) => {
 };
 
 
-
-
 const SortablePublications = (props) => {
-    const {superFilter} = React.useContext(Context)
-
+    const {user, superFilter} = React.useContext(Context)
     const meanMark = (publicationId) =>{
         let count = 0
         let sum = 0
@@ -146,10 +142,17 @@ const SortablePublications = (props) => {
                         <Col className="m-auto">Издание: {new Date(item.date_publ.toString()).toLocaleDateString()} </Col>
                         <Col className="m-auto" >{item.pages} стр.</Col>
                         <Col className="m-auto">{meanMark(item.id)}</Col>
-                        <Col className="m-auto"><Button href={"/publication/:"+item.id}
+                        <Col className="m-auto"><Button href={"/publication/"+item.id}
                                                         variant={"outline-light"}>Открыть</Button></Col>
-                         <Col className="m-auto"><Button href={"/publication/:"+item.id}
-                                                        variant={"outline-light"}>Удалить</Button></Col>
+                        {user.isAuth ?
+                            <Col className="m-auto">
+                                <Button href={"/publication/"+item.id}
+                                        variant={"outline-light"}>Удалить</Button>
+                        </Col>
+                            :
+                            <Col  className="m-auto">
+                            </Col>
+                        }
                     </Row>
                 </div>
 
@@ -227,9 +230,13 @@ const SortablePublications = (props) => {
                         disabledClassName={"paginationDisabled"}
                         activeClassName={"paginationActive"}/>
                         </Col>
-                        <Col>
-                            <Button variant={"outline-light"}>Добавить публикацию</Button>
-                        </Col>
+                        {user.isAuth ? <Col>
+                                <Button href={"/add_publication/"} variant={"outline-light"}>Добавить публикацию</Button>
+                            </Col>
+                            :
+                            <Col>
+                            </Col>
+                        }
                     </Row>
 
                 </div>

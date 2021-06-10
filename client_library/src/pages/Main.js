@@ -2,11 +2,13 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Card, Col, Container, Row} from "react-bootstrap";
 import {Context} from "../index";
 import {Link} from "react-router-dom";
-import {fetchAuthor, fetchPublication, fetchType} from "../http/library_api";
+import {fetchAuthor, fetchPublication, fetchRegion, fetchType} from "../http/library_api";
 import {observer} from "mobx-react-lite";
 import {fetchMark} from "../http/mark_api";
 import ReactPaginate from "react-paginate";
 import '../styles.css';
+import {fetchDialect} from "../http/lang_api";
+import {fetchTheme} from "../http/theme_topic_api";
 
 
 const Main = observer(() => {
@@ -17,6 +19,9 @@ const Main = observer(() => {
         fetchPublication().then(data => publication.setPublications(data)).then(data => mark.setPublications(data))
         fetchMark().then(data => mark.setMarks(data))
         fetchType().then(data => publication.setTypes(data))
+        fetchRegion().then(data => publication.setRegions(data))
+        fetchDialect().then(data => publication.setDialects(data))
+        fetchTheme().then(data => publication.setThemes(data))
     }, [publication, mark])
 
     const meanMark = (publicationId) =>{
@@ -44,7 +49,7 @@ const Main = observer(() => {
     const displayPublications = sortedPublictions
         .slice(pagesVisited, pagesVisited + publicationsPerPage)
         .map(publicat =>
-             <Link to={"/publication/:"+publicat.id} style={{ textDecoration: 'none' }}>
+             <Link to={"/publication/"+publicat.id} style={{ textDecoration: 'none' }}>
                 <div className="d-flex justify-content-between container mt-3" style={
                     { backgroundColor:'#3366CC', color:"white"}
                 }>

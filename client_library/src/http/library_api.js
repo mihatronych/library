@@ -15,6 +15,21 @@ export const fetchPublication = async () => {
     return data
 }
 
+export const fetchPublicator = async () => {
+    const {data} = await $host.get('api/Publicator/')
+    return data
+}
+
+export const fetchOnePublication = async (id) => {
+    const {data} = await $host.get('api/publication/' + id)
+    return data
+}
+
+export  const fetchRegion = async () => {
+    const {data} = await $host.get('api/Region/')
+    return data
+}
+
 export const fetchType = async () => {
     const {data} = await $host.get('api/type/')
     console.log(data)

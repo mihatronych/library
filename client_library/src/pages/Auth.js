@@ -64,7 +64,7 @@ const Auth = observer(() => {
                         placeholder="Введите ваше имя/псевдоним..."
                         value={nickname}
                         onChange={e => setNickname(e.target.value)}
-                    />: <div></div> }
+                    />: <div/> }
                     <Form.Control
                         className="mt-3"
                         placeholder="Введите ваш email..."
