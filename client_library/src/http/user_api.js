@@ -3,8 +3,8 @@ import jwt_decode from "jwt-decode";
 import {set} from "mobx";
 
 
-export const registration = async (email, nickname, countryId, password) => {
-    const {data} = await $host.post('api/author/registration', {email,  nickname, countryId, password})
+export const registration = async (email, name, password) => {
+    const {data} = await $host.post('api/author/registration', {email,  name, password})
     localStorage.setItem('token', data.token)
     return jwt_decode(data.token)
 }

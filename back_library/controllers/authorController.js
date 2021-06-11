@@ -15,8 +15,11 @@ const generateJwt = (id,name, email) => {
 class AuthorController{
     async registration(req, res, next) {
         const {name, email, password} = req.body
-        if (!email || !password) {
-            return next(ApiError.badRequest('Некорректный email или password'))
+        if (!password) {
+            return next(ApiError.badRequest('Некорректный password' + password))
+        }
+        if (!email) {
+            return next(ApiError.badRequest('Некорректный email' + email))
         }
         const candidate = await Author.findOne({where: {email}})
         if (candidate) {

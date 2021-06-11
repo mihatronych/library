@@ -70,6 +70,7 @@ const AddPublication = observer(() => {
                                       value={author_id}
                                       onChange={e => setAuthorId(e.target.value)}
                         >
+                            <option defaultChecked>----</option>
                             {publication.authors.map(author =>
                                 <option value={author.id}>{author.name}</option>
                             )}
@@ -80,6 +81,7 @@ const AddPublication = observer(() => {
                         <Form.Control as="select"
                                       value={themeId}
                                       onChange={e => setThemeId(e.target.value)}>
+                            <option defaultChecked>----</option>
                             {publication.themes.map(theme =>
                                 <option value={theme.id}>{theme.name}</option>
                             )}
@@ -90,6 +92,7 @@ const AddPublication = observer(() => {
                         <Form.Control as="select"
                                       value={typeId}
                                       onChange={e => setTypeId(e.target.value)}>
+                            <option defaultChecked>----</option>
                             {publication.types.map(type =>
                                 <option value={type.id}>{type.name}</option>
                             )}
@@ -115,6 +118,7 @@ const AddPublication = observer(() => {
                         <Form.Control as="select"
                                       value={publicatorId}
                                       onChange={e => setPublicatorId(e.target.value)}>
+                            <option defaultChecked>----</option>
                             {publication.publicators.map(publ =>
                                 <option value={publ.id}>{publ.name}</option>
                             )}
@@ -125,6 +129,7 @@ const AddPublication = observer(() => {
                         <Form.Control as="select"
                                       value={dialectId}
                                       onChange={e => setDialectId(e.target.value)}>
+                            <option defaultChecked>----</option>
                             {publication.dialects.map(dialect =>
                                 <option value={dialect.id}>{dialect.name}</option>
                             )}
@@ -135,6 +140,7 @@ const AddPublication = observer(() => {
                         <Form.Control as="select"
                             value={regionId}
                                       onChange={e => setRegionId(e.target.value)}>
+                            <option defaultChecked>----</option>
                             {publication.regions.map(region =>
                                 <option value={region.id}>{region.name}</option>
                             )}

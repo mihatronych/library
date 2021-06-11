@@ -29,7 +29,7 @@ function Footer() {
             <div style={style} >
 
                 <div className="d-flex justify-content-center container">
-                    <p className="small-text"> &copy; {new Date().getFullYear()} | Mihatron | dolgushin.mikhail131200@yandex.ru | <a href={"https://github.com/mihatronych"}>Git</a></p>
+                    <p className="small-text"> &copy; {new Date().getFullYear()} | Mihatron | dolgushin.mikhail131200@yandex.ru | <a target="_blank" href={"https://github.com/mihatronych"}>Git</a></p>
 
                 </div>
 

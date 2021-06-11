@@ -10,6 +10,19 @@ export const createPublication = async (publication) => {
     console.log(data)
     return data
 }
+
+export const updatePublication = async (publication) => {
+    const {data} = await $authHost.put('api/publication/', publication)
+    console.log(data)
+    return data
+}
+
+export const deletePublication = async (id) => {
+    const {data} = await $authHost.delete('api/publication/' + id)
+    console.log(data)
+    return data
+}
+
 export const fetchPublication = async () => {
     const {data} = await $host.get('api/publication/')
     return data

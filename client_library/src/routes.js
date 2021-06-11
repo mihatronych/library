@@ -6,7 +6,7 @@ import {
     MAIN_ROUTE,
     PUBLICATION_ROUTE, REGIONS_ROUTE,
     REGISTRATION_ROUTE,
-    THEMES_ROUTE
+    THEMES_ROUTE, UPDATE_PUBLICATION_ROUTE,
 } from "./utils/consts";
 import Auth from "./pages/Auth";
 import Publication from "./pages/Publication";
@@ -15,6 +15,7 @@ import Themes from "./pages/Themes";
 import Regions from "./pages/Regions";
 import Publications from "./pages/Publications";
 import AddPublication from "./pages/AddPublication";
+import UpdatePublication from "./pages/UpdatePublication";
 
 // ТОЛЬКО АВТОРИЗОВАННЫЕ
 export const authRoutes = [
@@ -58,4 +59,8 @@ export const publicRoutes = [
         path: ADD_PUBLICATION_ROUTE,
         Component: AddPublication
     },
+    {
+        path: UPDATE_PUBLICATION_ROUTE + '/:id',
+        Component: UpdatePublication
+    }
 ]

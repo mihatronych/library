@@ -15,7 +15,7 @@ const Auth = observer(() => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [nickname, setNickname] = useState('')
+    const [name, setName] = useState('')
 
     const storedToken = localStorage.getItem("token");
     if (storedToken){
@@ -36,8 +36,8 @@ const Auth = observer(() => {
                 console.log(data)
 
             } else {
-                console.log(email, nickname, password)
-                data = await registration(email, nickname, password);
+                console.log(email, name, password)
+                data = await registration(email, name, password);
             }
             if(data) {
                 user.setIsAuth(true)
@@ -62,8 +62,8 @@ const Auth = observer(() => {
                     {!isLogin ? <Form.Control
                         className="mt-3"
                         placeholder="Введите ваше имя/псевдоним..."
-                        value={nickname}
-                        onChange={e => setNickname(e.target.value)}
+                        value={name}
+                        onChange={e => setName(e.target.value)}
                     />: <div/> }
                     <Form.Control
                         className="mt-3"

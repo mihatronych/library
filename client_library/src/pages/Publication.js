@@ -3,6 +3,7 @@ import  {Row,Button, Card, Col, Container} from "react-bootstrap";
 import {Link, useParams, useHistory} from "react-router-dom";
 import {Context} from "../index";
 import {
+    deletePublication,
     fetchAuthor,
     fetchOnePublication,
     fetchPublication,
@@ -15,12 +16,13 @@ import {fetchMark} from "../http/mark_api";
 import {fetchDialect} from "../http/lang_api";
 import DropdownItem from "react-bootstrap/DropdownItem";
 import {observer} from "mobx-react-lite";
-import {LOGIN_ROUTE, PUBLICATION_ROUTE} from "../utils/consts";
+import {LOGIN_ROUTE, MAIN_ROUTE, PUBLICATION_ROUTE} from "../utils/consts";
 
 const Publication = observer(() => {
     const [publicn, setPublicn] = useState({info: []})
     const {publication, mark, theme, language} = useContext(Context)
     const {id} = useParams()
+    const history = useHistory()
     useEffect(() => {
         fetchOnePublication(id).then(data => setPublicn(data))
         fetchPublication().then(data => theme.setPublications(data))
@@ -51,6 +53,13 @@ const Publication = observer(() => {
             count = 1
         }
         return <i>{sum/(count * 10)}</i>
+    }
+
+    const Delete = (id) => {
+        deletePublication(id).then()
+        alert("Запись удалена")
+        publication.publications.delete()
+        history.push(MAIN_ROUTE)
     }
 
     return (
@@ -130,6 +139,7 @@ const Publication = observer(() => {
                 <Button
                 variant={"dark"}
                 style={{backgroundColor:"#6C5B7B", textAlign:"center"}}
+                href={"/update_publication/"+id}
             >
                 Редактировать публикацию
             </Button>
@@ -138,6 +148,7 @@ const Publication = observer(() => {
                     <Button
                     variant={"dark"}
                     style={{backgroundColor:"#6C5B7B", textAlign:"center"}}
+                    onClick={()=>Delete(id)}
                 >
                     Удалить публикацию
                 </Button>
