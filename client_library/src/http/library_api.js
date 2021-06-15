@@ -6,13 +6,27 @@ export const fetchAuthor = async () => {
     return data
 }
 export const createPublication = async (publication) => {
-    const {data} = await $authHost.post('api/publication/', publication)
+    let publ = new FormData()
+    publ.append("title", publication.title)
+    publ.append("short_review", publication.short_review)
+    publ.append('pages', publication.pages)
+    publ.append('authorId', publication.authorId)
+    publ.append('themeId', publication.themeId)
+    publ.append('typeId', publication.typeId)
+    publ.append('regionId', publication.regionId)
+    publ.append('date_publ', publication.date_publ)
+    publ.append('date_create',publication.date_create)
+    publ.append('dialectId', publication.dialectId)
+    publ.append('publicatorId', publication.publicatorId)
+    publ.append('file', publication.file)
+    const {data} = await $authHost.post('api/publication/', publ,
+        {headers:{'Content-Type':"multipart/form-data"}})
     console.log(data)
     return data
 }
 
 export const updatePublication = async (publication) => {
-    const {data} = await $authHost.put('api/publication/', publication)
+    const {data} = await $authHost.put('api/publication/'+publication.id, publication)
     console.log(data)
     return data
 }

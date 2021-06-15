@@ -4,10 +4,9 @@ class MarkController{
     async create(req, res, next){
         try{
             const {rate, content, authorId, publicationId} = req.body
-
             const mark = await Mark.create({rate, content, authorId, publicationId})
-
-            return res.json(mark)
+            console.log(res.json(mark))
+            return mark
         } catch (e){
             next(ApiError.badRequest(e.message))
         }

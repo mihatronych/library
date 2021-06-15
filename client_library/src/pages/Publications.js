@@ -11,10 +11,10 @@ import {fetchDialect} from "../http/lang_api";
 
 
 const Publications = observer(() => {
-    const {publication, mark, superFilter, theme} = useContext(Context)
+    const {publication, mark, superFilter} = useContext(Context)
     useEffect(() => {
-        fetchAuthor().then(data => publication.setAuthors(data)).then(data => mark.setAuthors(data))
-        fetchPublication().then(data => publication.setPublications(data)).then(data => mark.setPublications(data))
+        fetchAuthor().then(data => publication.setAuthors(data))
+        fetchPublication().then(data => publication.setPublications(data))
         fetchMark().then(data => mark.setMarks(data))
         fetchType().then(data => publication.setTypes(data))
         fetchRegion().then(data => publication.setRegions(data))

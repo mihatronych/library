@@ -4,6 +4,9 @@ import {Card, Col, DropdownButton, Row, Button} from "react-bootstrap";
 import {Context} from "../index";
 import DropdownItem from "react-bootstrap/DropdownItem";
 import ReactPaginate from 'react-paginate';
+import {deletePublication, fetchPublication} from "../http/library_api";
+import {MAIN_ROUTE, PUBLICATION_ROUTE} from "../utils/consts";
+import {useHistory} from "react-router-dom";
 
 const useSortableData = (items, sConfig, fConfig = null) => {
     const [sortConfig, setSortConfig] = React.useState(sConfig);
@@ -87,7 +90,9 @@ const useSortableData = (items, sConfig, fConfig = null) => {
 
 
 const SortablePublications = (props) => {
-    const {user, superFilter} = React.useContext(Context)
+    const {user, superFilter, publication} = React.useContext(Context)
+    const history = useHistory()
+
     const meanMark = (publicationId) =>{
         let count = 0
         let sum = 0
@@ -104,7 +109,16 @@ const SortablePublications = (props) => {
         return <div>рейтинг: {sum/(count * 10)}</div>
     }
 
-    const { items, requestSort,requestFilter, sortConfig,  filterConfig} = useSortableData(props.publications);
+    let { items, requestSort,requestFilter, sortConfig,  filterConfig} = useSortableData(props.publications);
+
+    const Delete = (id) => {
+        deletePublication(id).then()
+        alert("Запись удалена")
+        fetchPublication(data=> publication.setPublications(data)).then()
+        items = publication.publications
+        history.push(PUBLICATION_ROUTE)
+    }
+
     const getClassNamesFor = (name) => {
         if (!sortConfig) {
             return;
@@ -146,8 +160,9 @@ const SortablePublications = (props) => {
                                                         variant={"outline-light"}>Открыть</Button></Col>
                         {user.isAuth ?
                             <Col className="m-auto">
-                                <Button href={"/publication/"+item.id}
-                                        variant={"outline-light"}>Удалить</Button>
+                                <Button onClick={()=>Delete(item.id)}
+                                        variant={"outline-light"}
+                                >Удалить</Button>
                         </Col>
                             :
                             <Col  className="m-auto">

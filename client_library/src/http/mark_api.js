@@ -5,3 +5,9 @@ export const fetchMark = async () => {
     console.log(data)
     return data
 }
+
+export const createMark = async (mark) => {
+    const {data} = await $authHost.post('api/Mark/', mark)
+    console.log(data)
+    return data
+}

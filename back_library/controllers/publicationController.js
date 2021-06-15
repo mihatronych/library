@@ -14,7 +14,7 @@ class PublicationController{
             file.mv(path.resolve(__dirname, '..', 'static', fileName))
 
             const publication = await Publication.create({title, short_review, pages, date_publ, date_create, authorId, regionId, publicatorId, typeId, dialectId, themeId, file: fileName})
-
+            console.log(publication)
             return res.json(publication)
         } catch (e){
             next(ApiError.badRequest(e.message))
@@ -43,6 +43,7 @@ class PublicationController{
     }
     async update(req, res, next){
         try{
+            console.log(req.params)
             const {id} = req.params
             let {title, short_review, pages, date_publ, date_create, authorId, regionId, publicatorId, typeId,
                 dialectId, themeId} = req.body
@@ -97,6 +98,7 @@ class PublicationController{
             const publication = await cur_publication.update({title:title, short_review:short_review,
                 pages:pages, date_publ:date_publ, date_create:date_create, authorId:authorId, regionId:regionId,
                 publicatorId:publicatorId, typeId:typeId, dialectId:dialectId, themeId:themeId, file: fileName})
+            console.log(publication)
             return res.json({publication})
         }
         catch (e){

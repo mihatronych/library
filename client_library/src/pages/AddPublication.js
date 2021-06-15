@@ -8,13 +8,14 @@ import {fetchDialect} from "../http/lang_api";
 import {fetchTheme} from "../http/theme_topic_api";
 import {observer} from "mobx-react-lite";
 import {set} from "mobx";
-import {LOGIN_ROUTE} from "../utils/consts";
+import {LOGIN_ROUTE, MAIN_ROUTE} from "../utils/consts";
+import {useHistory} from "react-router-dom";
 
 
 
 const AddPublication = observer(() => {
     const {publication} = useContext(Context)
-
+    const history = useHistory()
     useEffect(() => {
         fetchAuthor().then(data => publication.setAuthors(data))
         fetchPublication().then(data => publication.setPublications(data))
@@ -33,17 +34,20 @@ const AddPublication = observer(() => {
     const [regionId, setRegionId] = useState('')
     const [publicatorId, setPublicatorId] = useState('')
     const [typeId, setTypeId] = useState('')
-    const [date_publ, setDate_publ] = useState(new Date().toLocaleDateString())
-    const [date_create, setDate_create] = useState(new Date().toLocaleDateString())
+    const [date_publ, setDate_publ] = useState(new Date().toISOString())
+    const [date_create, setDate_create] = useState(new Date().toISOString())
     const [file, setFile] = useState('')
 
     const Create = () => {
         try {
+            const fl = document.getElementById('ze_best_file').files[0]
         createPublication({title: title, short_review: short_review, pages: pages,
         authorId: author_id, themeId: themeId, typeId: typeId, regionId:regionId, date_publ: date_publ,
-            date_create:date_create, dialectId:dialectId, publicatorId: publicatorId, file: file
+            date_create:date_create, dialectId:dialectId, publicatorId: publicatorId, file: fl
         }).then()
-        alert("Данные добавлены");
+            fetchPublication(data => publication.setPublications(data)).then()
+            alert("Данные добавлены");
+            history.push(MAIN_ROUTE)
         } catch (e) {
             return alert(e.response.data.message)
         }
@@ -150,6 +154,7 @@ const AddPublication = observer(() => {
                     <Form.File
                         className="mt-3"
                         value={file}
+                        id="ze_best_file"
                         onChange={e => setFile(e.target.value)}
                     />
                     

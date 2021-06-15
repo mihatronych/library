@@ -37,7 +37,7 @@ const Main = observer(() => {
         if (count === 0){
             count = 1
         }
-        return <div>рейтинг: {sum/(count * 10)}</div>
+        return <div>рейтинг: {sum/(count)}</div>
     }
 
     const [pageNumber, setPageNumber] = useState(0)
@@ -71,7 +71,9 @@ const Main = observer(() => {
                     <Row>
                         <Col className="m-auto">Дата издания: {new Date(publicat.date_publ.toString()).toLocaleDateString()} </Col>
                         <Col className="m-auto" >{publicat.pages} стр.</Col>
-                        <Col className="m-auto">{meanMark(publicat.id)}</Col>
+                        <Col className="m-auto">
+                        <Row>{meanMark(publicat.id)}/10</Row>
+                        </Col>
                     </Row>
                 </div>
             </Link>

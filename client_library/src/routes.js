@@ -1,9 +1,10 @@
 import Main from "./pages/Main";
 import {
+    ADD_MARK_ROUTE,
     ADD_PUBLICATION_ROUTE,
-    AUTHORS_ROUTE,
+    AUTHORS_ROUTE, GRAPHS_ROUTE,
     LOGIN_ROUTE,
-    MAIN_ROUTE,
+    MAIN_ROUTE, MARKS_ROUTE,
     PUBLICATION_ROUTE, REGIONS_ROUTE,
     REGISTRATION_ROUTE,
     THEMES_ROUTE, UPDATE_PUBLICATION_ROUTE,
@@ -16,6 +17,9 @@ import Regions from "./pages/Regions";
 import Publications from "./pages/Publications";
 import AddPublication from "./pages/AddPublication";
 import UpdatePublication from "./pages/UpdatePublication";
+import Marks from "./pages/Marks";
+import AddMark from "./pages/AddMark";
+import Graphs from "./pages/Graphs";
 
 // ТОЛЬКО АВТОРИЗОВАННЫЕ
 export const authRoutes = [
@@ -62,5 +66,17 @@ export const publicRoutes = [
     {
         path: UPDATE_PUBLICATION_ROUTE + '/:id',
         Component: UpdatePublication
+    },
+    {
+        path: MARKS_ROUTE+ '/:id',
+        Component: Marks
+    },
+    {
+        path: ADD_MARK_ROUTE+ '/:id',
+        Component: AddMark
+    },
+    {
+        path: GRAPHS_ROUTE,
+        Component: Graphs
     }
 ]

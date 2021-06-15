@@ -16,7 +16,7 @@ import {fetchMark} from "../http/mark_api";
 import {fetchDialect} from "../http/lang_api";
 import DropdownItem from "react-bootstrap/DropdownItem";
 import {observer} from "mobx-react-lite";
-import {LOGIN_ROUTE, MAIN_ROUTE, PUBLICATION_ROUTE} from "../utils/consts";
+import {LOGIN_ROUTE, MAIN_ROUTE, MARKS_ROUTE, PUBLICATION_ROUTE} from "../utils/consts";
 
 const Publication = observer(() => {
     const [publicn, setPublicn] = useState({info: []})
@@ -52,13 +52,13 @@ const Publication = observer(() => {
         if (count === 0){
             count = 1
         }
-        return <i>{sum/(count * 10)}</i>
+        return <i>{sum/(count)}</i>
     }
 
     const Delete = (id) => {
         deletePublication(id).then()
         alert("Запись удалена")
-        publication.publications.delete()
+        fetchPublication().then(data => publication.setPublications(data))
         history.push(MAIN_ROUTE)
     }
 
@@ -134,7 +134,7 @@ const Publication = observer(() => {
                 </Row>
                 <a href={process.env.REACT_APP_API_URL + publicn.file} target="_blank"
                    className="d-flex justify-content-center" download>Открыть для чтения</a>
-                <Link className="d-flex justify-content-center">Отзывы</Link>
+                <a href={MARKS_ROUTE + '/'+ publicn.id} className="d-flex justify-content-center">Отзывы</a>
                 <div className="d-inline-flex justify-content-center  mt-3 ">
                 <Button
                 variant={"dark"}
