@@ -106,7 +106,7 @@ const SortablePublications = (props) => {
         if (count === 0){
             count = 1
         }
-        return <div>рейтинг: {sum/(count * 10)}</div>
+        return <div>рейтинг: {sum/(count)}</div>
     }
 
     let { items, requestSort,requestFilter, sortConfig,  filterConfig} = useSortableData(props.publications);

@@ -156,6 +156,7 @@ const AddPublication = observer(() => {
                         value={file}
                         id="ze_best_file"
                         onChange={e => setFile(e.target.value)}
+                        accept=".txt"
                     />
                     
                     <Button
